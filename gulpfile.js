@@ -6,20 +6,16 @@ var gulp  = require('gulp'),
 	uglify = require('gulp-uglify'),
 	minify = require('gulp-minify');
 var paths = {
-	htmlSrc:'client/app/**/*.html',
-	htmlDest:'public/build/html',
-	jsSrc:'client/app/**/*.js',
-	jsDest:'public/build/js',
-	sassSrc:'resources/assets/sass/*.scss',
-	sassFile:'resources/assets/sass/app.scss',
-	sassDest:'public/css/',
-	cssSrc:'public/css/temp/*.css',
-	cssDest:'public/css',
-	cssMapSrc:'public/css/temp/*',
-	cssMapDest:'public/css/'
+	htmlSrc:'src/app/**/*.html',
+	htmlDest:'build/html',
+	jsSrc:'src/app/**/*.js',
+	jsDest:'build/js',
+	sassSrc:'src/style/*.scss',
+	sassFile:'src/style/app.scss',
+	sassDest:'build/css/',
+	jsLibDest:'lib/js'
 }
 
-});
 gulp.task('compile-sass',function(){
 	gutil.log("Compiling sass files");
 	return gulp.src(paths.sassFile)
@@ -40,6 +36,7 @@ gulp.task('css',['compile-sass'],function(){//dont use it now
 gulp.task('default', function() {
   return gutil.log('Gulp is running!')
 });
+
 gulp.task('build-js',function(){
 	gutil.log('Concat and copy js files');
 	return gulp.src(paths.jsSrc)
@@ -51,6 +48,15 @@ gulp.task('build-js',function(){
 		.pipe(gulp.dest(paths.jsDest));
 });
 
+gulp.task('copy-js-lib',function(){
+	var src = [
+		"node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
+		"node_modules/toastr/build/toastr.min.js",
+		"node_modules/moment/min/moment.min.js"
+	]
+	return gulp.src(src)
+		.pipe(gulp.dest(paths.jsLibDest))
+});
 gulp.task('copy-html', function() {
 	// copy any html files in source/ to public/
 	gutil.log('Copying HTML Files');
