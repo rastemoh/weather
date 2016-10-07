@@ -14,20 +14,26 @@
             save: save,
             update: update,
             post: save,
-            api: {
-                getAll: getAll,
-                delete: remove,
-                create: create,//it is not like store, and it's rarely used.
-                store: store,
-                getOne: getOne,
-                update: apiUpdate,
-                methods: methodCall,
+            weatherApi: {
+                byCoord:getWeatherByCoord,
+            },
+            geocoderApi:{
+                find:findLocationByAddress
             },
             helper: {
                 deleteNullProperties: delete_null_properties,
             }
         }
-        var urls = {}
+        var owmUrl = "http://api.openweathermap.org/data/2.5/weather?APPID=335d350aea231548c1701c398c22011b&units=metric&";
+        var geocoderApiKey = "AIzaSyBzjrcbFKme3zUQKuF75Vb3woLiubSrhnI";
+        var weatherUrls = {
+            byCityName : owmUrl+"q=",//the city name follows
+            byCityId: owmUrl+"id=",//city id follows
+            byCoord: owmUrl//+lat=35&lon=139 follows
+        }
+        var geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&key="+geocoderApiKey+"&address="//query
+
+
         var errorMessage = "Problem fetching data";
         var unAuthorizedErrorMessage = "You are not authorized";
         return service;
@@ -63,36 +69,15 @@
         /*
          API 1 functions
          */
-        function getAll(type) {
-            return get(urls[type].index);
+
+        function getWeatherByCoord(coord){
+            var postfix = "lat="+coord.lat+"&lon="+coord.lng;
+            return get(weatherUrls.byCoord+postfix)
         }
 
-        function remove(type, id) {
-            return destroy(urls[type].delete, id);
+        function findLocationByAddress(address) {
+            return get(geocodeUrl+address);
         }
-
-        function create(type) {
-            return get(urls[type].create);
-        }
-
-        function store(type, data) {
-            return save(data, urls[type].store);
-        }
-
-        function getOne(type, id) {
-            return get(urls[type].index + "/" + id);
-        }
-
-        function apiUpdate(type, data) {
-            data = delete_null_properties(data);
-            return update(data, urls[type].update);
-        }
-
-        function methodCall(type, data) {
-            return save(data, urls[type].methods);
-        }
-
-
         /*
          Herplers
          */

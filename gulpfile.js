@@ -52,7 +52,9 @@ gulp.task('copy-js-lib',function(){
 	var src = [
 		"node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
 		"node_modules/toastr/build/toastr.min.js",
-		"node_modules/moment/min/moment.min.js"
+		"node_modules/moment/min/moment.min.js",
+		"bower_components/angular/angular.min.js",
+		"bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"
 	]
 	return gulp.src(src)
 		.pipe(gulp.dest(paths.jsLibDest))
@@ -63,7 +65,7 @@ gulp.task('copy-html', function() {
 	gulp.src(paths.htmlSrc).pipe(gulp.dest(paths.htmlDest));
 });
 
-gulp.task('build',['build-js','copy-html'],function(){
+gulp.task('build',['build-js','copy-html','compile-sass','copy-js-lib'],function(){
 
 });
 gulp.task('build-watch', function() {

@@ -10,7 +10,7 @@
     configToastr.$inject = ['toastr'];
     function configToastr(toastr) {
         // toastr.options.rtl = true;
-        toastr.options.positionClass = "toast-top-left";
+        toastr.options.positionClass = "toast-top-right";
     }
     configMoment.$inject = ['moment'];
     function configMoment(moment){

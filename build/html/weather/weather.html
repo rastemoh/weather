@@ -1,1 +1,46 @@
-<h1>Hello World</h1>
+<h1>Weather Data</h1>
+<div class="row">
+    <div class="col-md-4" ng-if="$ctrl.geoLocation">
+        <p class="bg-primary" ng-if="$ctrl.coords">
+            You are at latitude: {{$ctrl.coords.lat}} and longitude: {{$ctrl.coords.lng}}
+        </p>
+        <p ng-if="!$ctrl.coords">
+            Loading...
+        </p>
+    </div>
+    <div class="col-md-4" ng-if="!$ctrl.geoLocation">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Please enter the name of your city or a postcode to find its weather data:
+                <input type="text" class="form-control" placeholder="City name or postcode" ng-model="$ctrl.location"
+                       uib-typeahead="location as location.name for location in $ctrl.lookupLocation($viewValue)"
+                       typeahead-loading="loadingLocations" typeahead-no-results="noResults">
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default" ng-click="$ctrl.loadWeatherByCoord($ctrl.location.coord)">
+                    Fetch weather data</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Weather data for your location
+            </div>
+            <div class="panel-body">
+                <h3 class="weather-header"><span ng-bind="$ctrl.weatherData.weather[0].main"></span>
+                    <small ng-bind="$ctrl.weatherData.weather[0].description"></small></h3>
+                <p class="bg-info">
+                    Temprature: <span ng-bind="$ctrl.weatherData.main.temp"></span>
+                </p>
+                <img class="img-thumbnail img-responsive" ng-src="{{$ctrl.imageUrl}}">
+            </div>
+        </div>
+    </div>
+</div>
+<!--<p>-->
+    <!--Weather Data:-->
+    <!--{{$ctrl.weatherData |json}}-->
+<!--</p>-->
