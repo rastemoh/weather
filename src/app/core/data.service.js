@@ -24,7 +24,7 @@
                 deleteNullProperties: delete_null_properties,
             }
         }
-        var owmUrl = "https://api.openweathermap.org/data/2.5/weather?APPID=335d350aea231548c1701c398c22011b&units=metric&";
+        var owmUrl = "http://api.openweathermap.org/data/2.5/weather?APPID=335d350aea231548c1701c398c22011b&units=metric&";
         var geocoderApiKey = "AIzaSyBzjrcbFKme3zUQKuF75Vb3woLiubSrhnI";
         var weatherUrls = {
             byCityName : owmUrl+"q=",//the city name follows
